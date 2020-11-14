@@ -5,10 +5,43 @@
 
 <body>
     <%- include('common/header'); -%>
-    <div class="container">
-        <h1>Hello</h1>
-        <h2>Huong</h2>
-        <i class="far fa-user"></i>
+    <div class="main-page pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                <% for(let i = 0; i<blogs.length; i++) { %>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="blogs__item">
+                        <div class="blogs__item--img">
+                            <a href="/blog/<%= blogs[i].slug %>">
+                                <img src=" <%= blogs[i].image %>" alt="">
+                            </a>
+
+                        </div>
+                        <div class="blogs__item--info">
+                            <div class="blogs__item--info-head">
+                                <span class="blog-date">
+                                    <%= blogs[i].createdAt.toLocaleDateString() %>
+                                </span>
+                                <span class="blog-date">
+                                    ABC
+                                    <%= blogs[i].username %>
+                                </span>
+                            </div>
+                            <h3 class="blogs__item--info-name">
+                                <a class="blogs__item--info-link" href="/blog/<%= blogs[i].slug %>">
+                                    <%= blogs[i].title %>
+                                </a>
+                            </h3>
+                            <p class="blogs__item--info-desc">
+                                <%= blogs[i].description %>
+                            </p>
+                            <a href="/blog/<%= blogs[i].slug %>" class="btn btn-outline-info">View more</a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
     </div>
 
     <%- include('common/footer'); -%>

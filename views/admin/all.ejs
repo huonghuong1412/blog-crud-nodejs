@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../common/head'); -%>
+
+<body>
+    <%- include('../common/header'); -%>
+    <div class="container pt-4 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <a href="/post/new" class="btn btn-outline-success">
+                        Thêm Blog
+                    </a>
+                </div>
+                <div class="col-12">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i = 0; i<blogs.length; i++) { %>
+                            <tr>
+                                <th scope="row"><%= i %></th>
+                                <td><%= blogs[i].title %></td>
+                                <td><%= blogs[i].description %></td>
+                                <td><%= blogs[i].createdAt.toLocaleDateString() %></td>
+                                <td>
+                                    <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
+                                        Sửa
+                                    </a>
+                                    <button class="btn btn-outline-danger" data-id="<%=blogs[i]._id %>"
+                                        data-toggle="modal" data-target="#delete-blog">
+                                        Xoá
+                                    </button>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete-blog" tabindex="-1" aria-labelledby="deleteFormLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteFormLabel">Xoá Blog?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>
+                        Bạn có chắc chắn xoá blog này
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-delete-blog" type="button" class="btn btn-danger">Xoá</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="POST" id="formDelete" name="form-Delete" hidden></form>
+
+    <%- include('../common/footer'); -%>
+    <%- include('../common/script'); -%>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let blogId;
+            let deleteForm = document.forms['form-Delete']
+            console.log(deleteForm);
+            $('#delete-blog').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget)
+                blogId = button.data('id')
+                let btnDeleteBlog = document.getElementById('btn-delete-blog');
+                btnDeleteBlog.onclick = function () {
+                    deleteForm.action = `/post/delete/${blogId}?_method=DELETE`;
+                    deleteForm.submit();
+                }
+            })
+
+        }, false)
+    </script>
+
+</body>
+
+</html>

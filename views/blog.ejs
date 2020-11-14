@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('common/head'); -%>
+
+<body>
+    <%- include('common/header'); -%>
+    <div class="main-page pt-5 pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="blog-title mb-3">
+                        <%= blog.title %>
+                    </h3>
+                    <img src="<%=blog.image %>" class="blog-img" alt="">
+                    <p class="card-text mt-3">
+                        <%= blog.description %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('common/footer'); -%>
+    <%- include('common/script'); -%>
+
+</body>
+
+</html>
