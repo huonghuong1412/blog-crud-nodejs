@@ -3,8 +3,6 @@ const ejs = require('ejs');
 const app = express();
 const port = 3000;
 const database = require('./config/database')
-const Blog = require('./app/model/Blog')
-
 const BlogController = require('./app/controller/posts')
 const AboutController = require('./app/controller/about')
 const UserController = require('./app/controller/user')
@@ -37,12 +35,16 @@ app.post('/post/update/:id', ManageController.update)
 // delete
 app.post('/post/delete/:id', ManageController.delete)
 
+// search blog
+app.get('/post/search', ManageController.search)
+
 // about page
 app.get('/about', AboutController.about)
 
 // user action
-app.get('/login', UserController.login)
-app.get('/register', UserController.register)
+app.get('/auth/login', UserController.login)
+app.get('/auth/register', UserController.register)
+app.post('/user/register', UserController.storeUser)
 
 app.get('*', (req, res, next) => {
     res.render('notfound')

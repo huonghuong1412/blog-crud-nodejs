@@ -48,6 +48,18 @@ class Managecontroller {
             .catch(next)
     }
 
+    // Search blog -- /post/search
+
+    search = (req, res, next) => {
+        let textSearch = req.query.title;
+        Blog.find({
+            title: textSearch
+        }, (err, blogs) => {
+            res.render('admin/search', {
+                blogs: blogs
+            })
+        })
+    }
 }
 
 module.exports = new Managecontroller();

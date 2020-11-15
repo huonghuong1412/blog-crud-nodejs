@@ -13,43 +13,41 @@
                         Thêm Blog
                     </a>
                 </div>
-                <div class="col-12 mt-2 mb-3">
-                    <form action="/post/search" class="form-group d-flex">
-                        <input type="text" placeholder="Search" name="title" class="form-control" style="width: 300px;">
-                        <button type="submit" class="btn btn-outline-primary ml-3">Search</button>
-                    </form>
-                </div>
                 <div class="col-12">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for(let i = 0; i<blogs.length; i++) { %>
-                            <tr>
-                                <th scope="row"><%= i+1 %></th>
-                                <td><%= blogs[i].title %></td>
-                                <td><%= blogs[i].description %></td>
-                                <td><%= blogs[i].createdAt.toLocaleDateString() %></td>
-                                <td>
-                                    <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
-                                        Sửa
-                                    </a>
-                                    <button class="btn btn-outline-danger" data-id="<%=blogs[i]._id %>"
-                                        data-toggle="modal" data-target="#delete-blog">
-                                        Xoá
-                                    </button>
-                                </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                    <% if(blogs){ %>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let i = 0; i<blogs.length; i++) { %>
+                                <tr>
+                                    <th scope="row"><%= i+1 %></th>
+                                    <td><%= blogs[i].title %></td>
+                                    <td><%= blogs[i].description %></td>
+                                    <td><%= blogs[i].createdAt.toLocaleDateString() %></td>
+                                    <td>
+                                        <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
+                                            Sửa
+                                        </a>
+                                        <button class="btn btn-outline-danger" data-id="<%=blogs[i]._id %>"
+                                            data-toggle="modal" data-target="#delete-blog">
+                                            Xoá
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    <% } else{ %>  
+                        <p>No Blog Found</p>
+                    <% } %>
                 </div>
             </div>
         </div>
