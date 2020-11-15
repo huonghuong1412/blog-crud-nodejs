@@ -1,13 +1,12 @@
 const express = require('express');
 const expressSession = require('express-session');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const database = require('./config/database');
 const BlogController = require('./app/controller/posts');
 const AboutController = require('./app/controller/about');
 const UserController = require('./app/controller/user');
 const ManageController = require('./app/controller/manage');
-const User = require('./app/model/User');
 
 database.connect();
 
