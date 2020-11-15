@@ -4,6 +4,7 @@ class BlogController {
     // get all
     getAll = (req, res, next) => {
         Blog.find({}, (err, blogs) => {
+            console.log(req.session);
             res.render('index', {
                 blogs: blogs
             })

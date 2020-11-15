@@ -4,15 +4,24 @@ class Managecontroller {
     // get all
     getAll = (req, res, next) => {
         Blog.find({}, (err, blogs) => {
-            res.render('admin/all', {
-                blogs: blogs
-            })
+            if (req.session.userId) {
+                res.render('admin/all', {
+                    blogs: blogs
+                })
+            } else {
+                res.redirect('/auth/login')
+            }
         })
     }
 
     // create page to add blog
     createPage = (req, res, next) => {
-        res.render('admin/create')
+        if (req.session.userId) {
+            res.render('admin/create')
+        } else {
+            res.redirect('/auth/login')
+        }
+
     }
 
     // store to post blog /post/store
