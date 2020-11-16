@@ -21,6 +21,10 @@ a {
     transition: all 0.3s ease;
 }
 
+textarea {
+    white-space: pre-wrap;
+}
+
 .footer {
     background-color: lightgreen;
     font-size: 20px;
@@ -97,4 +101,8 @@ textarea:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.blog__text--detail {
+    white-space: pre-line;
 }
