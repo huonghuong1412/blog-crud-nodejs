@@ -36,7 +36,7 @@
                                 <th scope="row"><%= i+1 %></th>
                                 <td><%= blogs[i].title %></td>
                                 <td><%= blogs[i].description %></td>
-                                <td><%= blogs[i].createdAt.toLocaleDateString() %></td>
+                                <td><%= blogs[i].updatedAt.toLocaleDateString() %></td>
                                 <td>
                                     <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
                                         Sửa
