@@ -1,31 +1,55 @@
 const Blog = require('../model/Blog')
-
+const User = require('../model/User')
 class Managecontroller {
     // get all
     getAll = (req, res, next) => {
-        Blog.find({}, (err, blogs) => {
-            if (req.session.userId) {
-                res.render('admin/all', {
-                    blogs: blogs
+        const perPage = 4;
+        const page = req.params.page || 1;
+        Blog
+            .find({})
+            .skip((perPage * page) - perPage)
+            .limit(perPage)
+            .exec((err, blogs) => {
+                Blog.count().exec((err, count) => {
+                    if (err) {
+                        next();
+                    } else {
+                        if (req.session.User) {
+                            res.render('admin/all', {
+                                blogs: blogs,
+                                current: page,
+                                pages: Math.ceil(count / perPage)
+                            })
+                        } else {
+                            res.redirect('/auth/login')
+                        }
+                    }
                 })
-            } else {
-                res.redirect('/auth/login')
-            }
-        })
+            })
+        // Blog.find({}, (err, blogs) => {
+        //     if (req.session.User) {
+        //         res.render('admin/all', {
+        //             blogs: blogs
+        //         })
+        //     } else {
+        //         res.redirect('/auth/login')
+        //     }
+        // })
     }
 
     // create page to add blog
     createPage = (req, res, next) => {
-        if (req.session.userId) {
+        if (req.session.User) {
             res.render('admin/create')
         } else {
             res.redirect('/auth/login')
         }
-
     }
 
     // store to post blog /post/store
     create = (req, res, next) => {
+        var User = req.session.User;
+        req.body.user = User;
         Blog.create(req.body, (err, blog) => {
             res.redirect('/')
         })
@@ -42,6 +66,8 @@ class Managecontroller {
 
     // update blog item -- /post/:id
     update = (req, res, next) => {
+        var User = req.session.User;
+        req.body.user = User;
         Blog.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect('/manage'))
             .catch(next)

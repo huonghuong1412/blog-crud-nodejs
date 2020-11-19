@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('../common/head'); -%>
+<%- include('../common/head') -%>
 
 <body>
-    <%- include('../common/header'); -%>
+    <%- include('../common/header') -%>
     <div class="container pt-4 pb-5">
         <div class="container">
             <div class="row">
@@ -51,11 +51,42 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-12">
+                    <% if (pages > 0) { %>
+                    <ul class="pagination text-center mb-0">
+                        <% if (current == 1) { %>
+                        <li><a class="disabled pagination-button pagination-button-prev">First</a></li>
+                        <% } else { %>
+                        <li><a class="pagination-button pagination-button-prev" href="/manage/1">First</a></li>
+                        <% } %>
+                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                        <% if (i !== 1) { %>
+                        <li><a class="disabled pagination-btn">...</a></li>
+                        <% } %>
+                        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                        <li><a class="active pagination-btn"><%= i %></a></li>
+                        <% } else { %>
+                        <li><a class="pagination-btn" href="/manage/<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                        <li><a class="disabled pagination-btn">...</a></li>
+                        <% } %>
+                        <% } %>
+                        <% if (current == pages) { %>
+                        <li><a class="disabled pagination-button pagination-button-next">Last</a></li>
+                        <% } else { %>
+                        <li><a class="pagination-button pagination-button-next" href="/manage/<%= pages %>">Last</a></li>
+                        <% } %>
+                    </ul>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="delete-blog" tabindex="-1" aria-labelledby="deleteFormLabel" aria-hidden="true">
+    <div class="modal fade" id="delete-blog" tabindex="-1" aria-labelledby="deleteFormLabel" aria-hidden="true"
+        role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,14 +109,13 @@
     </div>
     <form method="POST" id="formDelete" name="form-Delete" hidden></form>
 
-    <%- include('../common/footer'); -%>
-    <%- include('../common/script'); -%>
+    <%- include('../common/footer') -%>
+    <%- include('../common/script') -%>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let blogId;
-            let deleteForm = document.forms['form-Delete']
-            console.log(deleteForm);
+            let deleteForm = document.forms['form-Delete'];
             $('#delete-blog').on('show.bs.modal', function (event) {
                 let button = $(event.relatedTarget)
                 blogId = button.data('id')
@@ -96,7 +126,7 @@
                 }
             })
 
-        }, false)
+        })
     </script>
 
 </body>

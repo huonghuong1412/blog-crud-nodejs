@@ -6,19 +6,32 @@
 <body>
     <%- include('common/header'); -%>
     <div class="main-page pt-5 pb-5">
+        <% if(blog) { %>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <h3 class="blog-title mb-3">
-                        <%= blog.title %>
+                        <%= blog ? blog.title : '' %>
                     </h3>
+                    <% if(blog) {%>
                     <img src="<%=blog.image %>" class="blog-img" alt="">
+                    <% } %>
                     <p class="card-text mt-3 blog__text--detail">
-                        <%= blog.description %>
+                        <%= blog ? blog.description : '' %>
                     </p>
+                </div>
+                <div class=" col-12 pt-3">
+                    <% if(blog) {%>
+                    <p>Posted by: <%= blog.user ? blog.user.name : 'Admin' %></p>
+                    <% } %>
                 </div>
             </div>
         </div>
+        <% } else { %>
+        <h1 class="text-center">
+            404 - Page Not Found
+        </h1>
+        <% } %>
     </div>
 
     <%- include('common/footer'); -%>

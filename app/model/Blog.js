@@ -9,7 +9,7 @@ const Blog = new Schema(
         description: { type: String, required: true },
         image: { type: String, required: true },
         slug: { type: String, slug: 'title', unique: true },
-        username: { type: String, maxlength: 100, minlength: 6 }
+        user: { type: Object, maxlength: 100, minlength: 6 }
     },
     {
         timestamps: true

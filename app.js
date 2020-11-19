@@ -19,7 +19,7 @@ app.use(expressSession({
 
 global.loggedIn = null;
 app.use("*", (req, res, next) => {
-    loggedIn = req.session.userId;
+    loggedIn = req.session.User;
     next()
 });
 
@@ -28,13 +28,17 @@ app.set('view engine', 'ejs')
 app.get('/', BlogController.getAll);
 app.get('/blog/:slug', BlogController.getDetail);
 
+// blog page
+app.get('/blogs/:page', BlogController.getAll)
+
+
 // manage admin action
 // create 
 app.get('/post/new', UserController.authMiddleware, ManageController.createPage);
 app.post('/post/store', UserController.authMiddleware, ManageController.create);
 
 // get page admin
-app.get('/manage', ManageController.getAll);
+app.get('/manage/:page', ManageController.getAll);
 
 // update
 app.get('/post/:id/edit', ManageController.getItemEidt);
@@ -58,6 +62,7 @@ app.get('/auth/logout', UserController.logout)
 
 
 app.get('*', (req, res) => res.render('notfound'))
+app.get('/blog/abc', (req, res) => res.render('notfound'))
 
 app.listen(port, () => {
     console.log("Server listening in port = " + port);

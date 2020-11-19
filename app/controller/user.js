@@ -12,7 +12,11 @@ class UserController {
             if (user) {
                 bcrypt.compare(password, user.password, (err, same) => {
                     if (same) {
-                        req.session.userId = user._id;
+                        req.session.User = {
+                            userId: user._id,
+                            username: user.username,
+                            name: user.name
+                        };
                         res.redirect('/');
                     } else {
                         res.redirect('/auth/login')
@@ -26,7 +30,7 @@ class UserController {
 
     // Muon vao trang tao moi blog thi phai login truoc, neu khong se redirect ve trang chu
     authMiddleware = (req, res, next) => {
-        User.findById(req.session.userId, (err, user) => {
+        User.findById(req.session.User.userId, (err, user) => {
             if (err || !user) {
                 res.redirect('/');
             } else {
@@ -38,7 +42,7 @@ class UserController {
     // luu giu session sau khi dang nhap
     // chi hien khi nguoi dung dang nhap xong, con voi khach thi khong hien thi
     userSession = (req, res, next) => {
-        if (req.session.userId) {
+        if (req.session.User) {
             res.redirect('/')
         } else {
             next();
