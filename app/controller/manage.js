@@ -10,7 +10,7 @@ class Managecontroller {
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .exec((err, blogs) => {
-                Blog.count().exec((err, count) => {
+                Blog.countDocuments().exec((err, count) => {
                     if (err) {
                         next();
                     } else {
@@ -86,10 +86,28 @@ class Managecontroller {
     // Search blog -- /post/search
 
     search = (req, res, next) => {
-        let textSearch = req.query.title;
-        Blog.find({
-            title: textSearch
-        }, (err, blogs) => {
+        let query = {
+            $or: [
+                {
+                    title: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }, {
+                    slug: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }, {
+                    description: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }
+            ]
+        }
+        // let textSearch = req.query.slug;
+        Blog.find(query, (err, blogs) => {
             res.render('admin/search', {
                 blogs: blogs
             })

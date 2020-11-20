@@ -9,12 +9,13 @@ class BlogController {
             .find({})
             .skip((perPage * page) - perPage)
             .limit(perPage)
+            .sort('-createdAt')
             .exec((err, blogs) => {
-                Blog.count().exec((err, count) => {
+                Blog.countDocuments().exec((err, count) => {
                     if (err) {
                         next();
                     } else {
-                        if(req.params.page) {
+                        if (req.params.page) {
                             res.render('blogs', {
                                 blogs: blogs,
                                 current: page,
@@ -37,6 +38,34 @@ class BlogController {
         Blog.findOne({ slug: req.params.slug }, (err, blog) => {
             res.render('blog', {
                 blog: blog
+            })
+        })
+    }
+
+    searchBlog = (req, res, next) => {
+        let query = {
+            $or: [
+                {
+                    title: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }, {
+                    slug: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }, {
+                    description: {
+                        $regex: req.query.title,
+                        $options: 'i'
+                    }
+                }
+            ]
+        }
+        Blog.find(query, (err, blogs) => {
+            res.render('search', {
+                blogs: blogs
             })
         })
     }

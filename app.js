@@ -30,6 +30,7 @@ app.get('/blog/:slug', BlogController.getDetail);
 
 // blog page
 app.get('/blogs/:page', BlogController.getAll)
+app.get('/search', BlogController.searchBlog)
 
 
 // manage admin action
