@@ -42,14 +42,14 @@ app.post('/post/store', UserController.authMiddleware, ManageController.create);
 app.get('/manage/:page', ManageController.getAll);
 
 // update
-app.get('/post/:id/edit', ManageController.getItemEidt);
-app.post('/post/update/:id', ManageController.update);
+app.get('/post/:id/edit', UserController.authMiddleware, ManageController.getItemEidt);
+app.post('/post/update/:id', UserController.authMiddleware, ManageController.update);
 
 // delete
-app.post('/post/delete/:id', ManageController.delete);
+app.post('/post/delete/:id', UserController.authMiddleware, ManageController.delete);
 
 // search blog
-app.get('/post/search', ManageController.search);
+app.get('/post/search', UserController.authMiddleware, ManageController.search);
 
 // about page
 app.get('/about', AboutController.about);

@@ -1,16 +1,20 @@
 const Blog = require('../model/Blog')
-const User = require('../model/User')
 class Managecontroller {
     // get all
     getAll = (req, res, next) => {
         const perPage = 4;
         const page = req.params.page || 1;
+        const user = req.session.User;
         Blog
-            .find({})
+            .find({
+                user: user
+            })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .exec((err, blogs) => {
-                Blog.countDocuments().exec((err, count) => {
+                Blog.countDocuments({
+                    user: user
+                }).exec((err, count) => {
                     if (err) {
                         next();
                     } else {
@@ -57,11 +61,26 @@ class Managecontroller {
 
     // get item edit -- /post/:id/edit
     getItemEidt = (req, res, next) => {
-        Blog.findById(req.params.id, (err, blog) => {
-            res.render('admin/update', {
-                blog: blog
+        const user = req.session.User;
+        let query = {
+            $and: [
+                {
+                    user: user
+                },
+                {
+                    _id: req.params.id
+                }
+            ]
+        }
+        Blog.findOne(query)
+            .then((blog) => {
+                res.render('admin/update', {
+                    blog: blog
+                })
+            }).catch(() => {
+                next();
+                res.redirect('/')
             })
-        })
     }
 
     // update blog item -- /post/:id
@@ -69,7 +88,7 @@ class Managecontroller {
         var User = req.session.User;
         req.body.user = User;
         Blog.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/manage'))
+            .then(() => res.redirect('/manage/1'))
             .catch(next)
     }
 
@@ -86,6 +105,7 @@ class Managecontroller {
     // Search blog -- /post/search
 
     search = (req, res, next) => {
+        const user = req.session.User;
         let query = {
             $or: [
                 {
@@ -103,6 +123,11 @@ class Managecontroller {
                         $regex: req.query.title,
                         $options: 'i'
                     }
+                }
+            ],
+            $and: [
+                {
+                    user: user
                 }
             ]
         }
