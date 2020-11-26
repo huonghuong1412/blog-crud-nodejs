@@ -63,6 +63,20 @@ class UserController {
             .catch(() => res.redirect('/auth/register'))
     }
 
+    getProfile = (req, res, next) => {
+        const user = req.session.User;
+        if (user) {
+            User.findById(user.userId)
+                .then((user) => {
+                    res.render('user/auth', {
+                        user: user
+                    })
+                })
+        } else {
+            res.redirect("/auth/login")
+        }
+    }
+
     logout = (req, res) => {
         req.session.destroy(function () {
             delete req.session;
