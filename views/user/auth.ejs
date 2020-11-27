@@ -9,9 +9,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 pt-3 pb-3">
-                    <p>Id: <%= user._id %></p>
+                    <p>Thông tin tài khoản</p>
                     <p>Họ tên: <%= user.name %></p>
                     <p>Tài khoản: <%= user.username %></p>
+                </div>
+                <div class="col-12">
+                    <a href="/auth/change" class="btn btn-outline-info">Thay đổi thông tin</a>
                 </div>
             </div>
         </div>

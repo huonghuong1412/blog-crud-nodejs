@@ -77,6 +77,30 @@ class UserController {
         }
     }
 
+    changePage = (req, res, next) => {
+        const user = req.session.User;
+        const userId = user.userId;
+        if (user) {
+            User.findById(userId)
+                .then((user) => {
+                    res.render('user/update', {
+                        user: user
+                    })
+                })
+                .catch(() => {
+                    res.redirect("/")
+                })
+        }
+    }
+
+    changeProfile = (req, res, next) => {
+        const user = req.session.User;
+        const userId = user.userId;
+        User.findByIdAndUpdate(userId, req.body)
+            .then(() => res.redirect('/auth/profile'))
+            .catch(() => res.send("Đăng nhập trước khi chỉnh sửa thông tin"))
+    }
+
     logout = (req, res) => {
         req.session.destroy(function () {
             delete req.session;
