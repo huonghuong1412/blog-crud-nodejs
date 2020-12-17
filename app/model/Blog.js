@@ -7,7 +7,7 @@ const Blog = new Schema(
     {
         title: { type: String, required: true },
         description: { type: String, required: true },
-        image: { type: String, required: true },
+        image: { type: Array, required: true },
         slug: { type: String, slug: 'title', unique: true },
         user: { type: Object, maxlength: 100, minlength: 6 }
     },

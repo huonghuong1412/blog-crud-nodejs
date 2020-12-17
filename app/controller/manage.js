@@ -30,15 +30,6 @@ class Managecontroller {
                     }
                 })
             })
-        // Blog.find({}, (err, blogs) => {
-        //     if (req.session.User) {
-        //         res.render('admin/all', {
-        //             blogs: blogs
-        //         })
-        //     } else {
-        //         res.redirect('/auth/login')
-        //     }
-        // })
     }
 
     // create page to add blog
@@ -54,6 +45,9 @@ class Managecontroller {
     create = (req, res, next) => {
         var User = req.session.User;
         req.body.user = User;
+        var formData = req.body;
+        console.log(formData);
+
         Blog.create(req.body, (err, blog) => {
             res.redirect('/')
         })

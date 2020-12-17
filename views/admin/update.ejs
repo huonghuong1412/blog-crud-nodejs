@@ -15,11 +15,25 @@
                             <input type="text" value="<%= blog.title %>" name="title" class="form-control"
                                 id="input-title" placeholder="Title">
                         </div>
-                        <div class="form-group">
-                            <label for="input-title">Image</label>
-                            <input type="text" value="<%= blog.image %>" name="image" class="form-control"
-                                id="input-title" placeholder="Title">
+
+                        <button class="add-input btn btn-outline-info">Add image</button>
+                        <div class="form-image mt-3">
+                            <% if(blog.image) {%>
+                                <% for (var i = 0 ; i < blog.image.length; i++ ) { %>
+                                    <div class="form-group">
+                                        <div class="form-list-image">
+                                            <label for="input-title">Image</label>
+                                            <input type="text" value="<%= blog.image[i] %>" name="image" class="form-control"
+                                                id="input-title" placeholder="Image URL">
+                                            <a href="#" class="remove_field btn btn-outline-warning">Remove</a>
+                                        </div>
+                                    </div>
+                                <% } %>
+
+                            <% } %>
                         </div>
+
+                        
                         <div class="form-group">
                             <label for="input-desc">Description</label>
                             <textarea rows="4" name="description" class="form-control" id="input-desc"
@@ -34,6 +48,37 @@
 
     <%- include('../common/footer'); -%>
     <%- include('../common/script'); -%>
+
+    <script>
+        $(function () {
+            var max_field = 3;
+            var wrapper = $(".form-image");
+            var addButton = $(".add-input");
+            var x = 1;
+            $(addButton).click(function (e) {
+                e.preventDefault();
+                if (x < max_field) {
+                    x++;
+                    $(wrapper).append(
+                        '<div class="form-group"><div class="form-list-image"> <label for="input-title">Image URL: </label> <input type="text" name="image" class="form-control" id="input-title" placeholder="Image url (hơi cùi :v)">  <a href="#" class="remove_field btn btn-outline-warning">Remove</a> </div></div>'
+                    )
+                }
+            })
+            $(wrapper).on("click", ".remove_field", function (e) {
+                e.preventDefault();
+                $(this).parent("div.form-list-image").remove();
+                x--;
+            })
+        })
+        function sendData() {
+            var formData = new FormData();
+            $('.form-control').each(function (index, item) {
+                var val = $(item).val();
+                formData.append('value[]', val);
+            });
+        }
+
+    </script>
 
 </body>
 

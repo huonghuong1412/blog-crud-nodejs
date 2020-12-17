@@ -194,3 +194,20 @@ textarea:focus {
 .pagination-button-prev:hover {
     color: rgb(235, 223, 223);
 }
+
+.form-list-image {
+    display: flex;
+    align-items: center;
+}
+
+.form-list-image label {
+    width: 8%;
+}
+
+.form-list-image input {
+    width: 82%;
+}
+
+.form-list-image .btn {
+    width: 10%;
+}

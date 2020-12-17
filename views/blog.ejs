@@ -13,8 +13,13 @@
                     <h3 class="blog-title mb-3">
                         <%= blog ? blog.title : '' %>
                     </h3>
-                    <% if(blog) {%>
-                    <img src="<%=blog.image %>" class="blog-img" alt="">
+                    <% if(blog.image) {%>
+                            <% for (var i = 0 ; i < blog.image.length; i++ ) { %>
+                                    <div class="list-img mt-3 mb-3">
+                                        <img src="<%=blog.image[i] %>" alt="">
+                                    </div>
+                            <% } %>
+
                     <% } %>
                     <p class="card-text mt-3 blog__text--detail">
                         <%= blog ? blog.description : '' %>

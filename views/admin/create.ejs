@@ -2,35 +2,75 @@
 <html lang="en">
 
 <%- include('../common/head'); -%>
-<body>
-    <%- include('../common/header'); -%>
-    <div class="pt-5 pb-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <form method="POST" action="/post/store">
-                        <div class="form-group">
-                            <label for="input-title">Title</label>
-                            <input type="text" name="title" class="form-control" id="input-title" placeholder="Title">
+
+    <body>
+        <%- include('../common/header'); -%>
+            <div class="pt-5 pb-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="POST" action="/post/store">
+                                <div class="form-group">
+                                    <label for="input-title">Title</label>
+                                    <input type="text" name="title" class="form-control" id="input-title"
+                                        placeholder="Title">
+                                </div>
+
+                                <button class="add-input btn btn-outline-info">Add image</button>
+
+                                <div class="form-image mt-3">
+                                    <div class="form-group">
+                                        <label for="input-title">Image URL:</label>
+                                        <input type="text" name="image" class="form-control" id="input-title"
+                                            placeholder="Image url (hơi cùi :v)">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-desc">Description</label>
+                                    <textarea rows="4" name="description" class="form-control" id="input-desc"
+                                        placeholder="Description"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success">Add Blog</button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="input-title">Image</label>
-                            <input type="text" name="image" class="form-control" id="input-title" placeholder="Image url (hơi cùi :v)">
-                        </div>
-                        <div class="form-group">
-                            <label for="input-desc">Description</label>
-                            <textarea rows="4" name="description" class="form-control" id="input-desc" placeholder="Description"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Add Blog</button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <%- include('../common/footer'); -%>
-    <%- include('../common/script'); -%>
+            <%- include('../common/footer'); -%>
+                <%- include('../common/script'); -%>
 
-</body>
+                    <script>
+                        $(function () {
+                            var max_field = 3;
+                            var wrapper = $(".form-image");
+                            var addButton = $(".add-input");
+                            var x = 1;
+                            $(addButton).click(function (e) {
+                                e.preventDefault();
+                                if (x < max_field) {
+                                    x++;
+                                    $(wrapper).append(
+                                        '<div class="form-group"><div class="form-list-image"> <label for="input-title">Image URL: </label> <input type="text" name="image" class="form-control" id="input-title" placeholder="Image url (hơi cùi :v)">  <a href="#" class="remove_field btn btn-outline-warning">Remove</a> </div></div>'
+                                    )
+                                }
+                            })
+                            $(wrapper).on("click", ".remove_field", function (e) {
+                                e.preventDefault();
+                                $(this).parent("div.form-list-image").remove();
+                                x--;
+                            })
+                        })
+                        function sendData() {
+                            var formData = new FormData();
+                            $('.form-control').each(function (index, item) {
+                                var val = $(item).val();
+                                formData.append('value[]', val);
+                            });
+                        }
+
+                    </script>
+
+    </body>
 
 </html>
