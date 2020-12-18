@@ -34,7 +34,7 @@ class Managecontroller {
 
     // create page to add blog
     createPage = (req, res, next) => {
-        if (req.session.User) {
+        if (req.session.User && req.session.User.userId) {
             res.render('admin/create')
         } else {
             res.redirect('/auth/login')

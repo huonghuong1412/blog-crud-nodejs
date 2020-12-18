@@ -30,13 +30,19 @@ class UserController {
 
     // Muon vao trang tao moi blog thi phai login truoc, neu khong se redirect ve trang chu
     authMiddleware = (req, res, next) => {
-        User.findById(req.session.User.userId, (err, user) => {
-            if (err || !user) {
-                res.redirect('/');
-            } else {
-                next();
-            }
-        })
+        const User = req.session.User;
+        // User.findById(User.userId, (err, user) => {
+        //     if (err || !user) {
+        //         res.redirect('/auth/login');
+        //     } else {
+        //         next();
+        //     }
+        // })
+        if(User) {
+            next();
+        } else {
+            res.redirect('/auth/login');
+        }
     }
 
     // luu giu session sau khi dang nhap
