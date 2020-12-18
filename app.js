@@ -60,8 +60,6 @@ app.post('/user/login', UserController.userSession, UserController.checkLogin);
 app.get('/auth/register', UserController.userSession, UserController.register);
 app.post('/user/register', UserController.userSession, UserController.storeUser);
 app.get('/auth/profile', UserController.authMiddleware, UserController.getProfile);
-app.get('/auth/change', UserController.authMiddleware, UserController.changePage);
-app.post('/user/change', UserController.authMiddleware, UserController.changeProfile)
 app.get('/auth/logout', UserController.logout)
 
 
