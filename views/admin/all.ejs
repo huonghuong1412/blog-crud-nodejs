@@ -42,13 +42,13 @@
                                 </td>
                                 <td><%= blogs[i].updatedAt.toLocaleDateString() %></td>
                                 <td>
-                                    <a href="/blog/<%= blogs[i].slug %>" target="_blank" class="btn btn-outline-primary">
+                                    <a href="/blog/<%= blogs[i].slug %>" target="_blank" class="btn btn-outline-primary btn-abc">
                                         Xem
                                     </a>
-                                    <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
+                                    <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info btn-abc">
                                         Sửa
                                     </a>
-                                    <button class="btn btn-outline-danger" data-id="<%=blogs[i]._id %>"
+                                    <button class="btn btn-outline-danger btn-abc" data-id="<%=blogs[i]._id %>"
                                         data-toggle="modal" data-target="#delete-blog">
                                         Xoá
                                     </button>
