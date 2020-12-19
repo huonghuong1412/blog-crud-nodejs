@@ -42,6 +42,9 @@
                                 </td>
                                 <td><%= blogs[i].updatedAt.toLocaleDateString() %></td>
                                 <td>
+                                    <a href="/blog/<%= blogs[i].slug %>" target="_blank" class="btn btn-outline-primary">
+                                        Xem
+                                    </a>
                                     <a href="/post/<%= blogs[i]._id %>/edit" class="btn btn-outline-info">
                                         Sửa
                                     </a>
