@@ -9,7 +9,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <form method="POST" action="/post/store">
+                            <form method="POST" action="/post/store" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="input-title">Title</label>
                                     <input type="text" name="title" class="form-control" id="input-title"
@@ -20,8 +20,8 @@
 
                                 <div class="form-image mt-3">
                                     <div class="form-group">
-                                        <label for="input-title">Image URL:</label>
-                                        <input type="text" name="image" class="form-control" id="input-title"
+                                        <label for="input-title">Image:</label>
+                                        <input type="file" name="image" class="form-control" id="input-title"
                                             placeholder="Image url (hơi cùi ạ :v)">
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                 if (x < max_field) {
                                     x++;
                                     $(wrapper).append(
-                                        '<div class="form-group"><div class="form-list-image"> <label for="input-title">Image URL: </label> <input type="text" name="image" class="form-control" id="input-title" placeholder="Image url (hơi cùi :v)">  <a href="#" class="remove_field btn btn-outline-warning">Remove</a> </div></div>'
+                                        '<div class="form-group"><div class="form-list-image"> <label for="input-title">Image: </label> <input type="file" name="image" class="form-control" id="input-title" placeholder="Image url (hơi cùi :v)">  <a href="#" class="remove_field btn btn-outline-warning">Remove</a> </div></div>'
                                     )
                                 }
                             })

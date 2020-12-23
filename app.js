@@ -1,5 +1,6 @@
 const express = require('express');
 const expressSession = require('express-session');
+const fileUpload = require('express-fileupload')
 const app = express();
 const port = process.env.PORT || 3000;
 const database = require('./config/database');
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(expressSession({
     secret: 'keyboard cat'
 }))
+app.use(fileUpload())
 
 global.loggedIn = null;
 app.use("*", (req, res, next) => {

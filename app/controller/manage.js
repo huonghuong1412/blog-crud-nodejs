@@ -1,3 +1,4 @@
+const path = require('path')
 const Blog = require('../model/Blog')
 class Managecontroller {
     // get all
@@ -45,12 +46,32 @@ class Managecontroller {
     create = (req, res, next) => {
         var User = req.session.User;
         req.body.user = User;
-        var formData = req.body;
-        console.log(formData);
+        var image = req.files.image;
+        if (image.length > 1) {
+            var listImageName = [];
+            for (var i = 0; i < image.length; i++) {
+                listImageName.push('/upload/' + image[i].name)
+            }
+            for (var i = 0; i < image.length; i++) {
+                image[i].mv(path.resolve(__dirname, '../../public/upload', image[i].name));
+            }
+            Blog.create({
+                ...req.body,
+                image: listImageName
+            })
+                .then(() => res.redirect('/'))
+                .catch(() => res.redirect('/post/new'))
+        } else {
+            image.mv(path.resolve(__dirname, '../../public/upload', image.name), function (err) {
+                Blog.create({
+                    ...req.body,
+                    image: '/upload/' + image.name
+                }, (err, blog) => {
+                    res.redirect('/')
+                })
+            })
+        }
 
-        Blog.create(req.body, (err, blog) => {
-            res.redirect('/')
-        })
     }
 
     // get item edit -- /post/:id/edit
@@ -79,11 +100,37 @@ class Managecontroller {
 
     // update blog item -- /post/:id
     update = (req, res, next) => {
+        
         var User = req.session.User;
         req.body.user = User;
-        Blog.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/manage/1'))
-            .catch(next)
+        var image = req.files.image;
+        console.log(image);
+        if (image.length > 1) {
+            var listImageName = [];
+            for (var i = 0; i < image.length; i++) {
+                listImageName.push('/upload/' + image[i].name)
+            }
+            console.log(listImageName);
+            for (var i = 0; i < image.length; i++) {
+                image[i].mv(path.resolve(__dirname, '../../public/upload', image[i].name));
+            }
+            Blog.updateOne({ _id: req.params.id }, {
+                ...req.body,
+                image: listImageName
+            })
+                .then(() => res.redirect('/manage/1'))
+                .catch(next)
+        } else {
+            image.mv(path.resolve(__dirname, '../../public/upload', image.name), function (err) {
+                Blog.updateOne({ _id: req.params.id }, {
+                    ...req.body,
+                    image: '/upload/' + image.name
+                })
+                    .then(() => res.redirect('/manage/1'))
+                    .catch(next)
+            })
+        }
+
     }
 
     // delete blog -- /post/:id
